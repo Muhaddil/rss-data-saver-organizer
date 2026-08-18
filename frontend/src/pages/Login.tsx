@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../stores/authStore';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useAuthStore, authDisabled } from '../stores/authStore';
 import { toast } from 'react-hot-toast';
 import { Rocket } from 'lucide-react';
 
@@ -11,6 +11,10 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login, register } = useAuthStore();
   const navigate = useNavigate();
+
+  if (authDisabled) {
+    return <Navigate to="/" replace />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
